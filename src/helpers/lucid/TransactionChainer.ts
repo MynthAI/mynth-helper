@@ -158,6 +158,7 @@ class TransactionChainer {
 
   public getUtxosForTx(txHash: string): UTxO[] {
     const allUtxos = [];
+
     for (const address in this.utxos) {
       for (const utxo of this.utxos[address]) {
         if (utxo.txHash == txHash) {
@@ -165,6 +166,7 @@ class TransactionChainer {
         }
       }
     }
+
     return allUtxos;
   }
 
