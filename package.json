@@ -1,6 +1,6 @@
 {
   "name": "mynth-helper",
-  "version": "1.3.19",
+  "version": "1.3.20",
   "description": "Helper functions for various utilities",
   "type": "module",
   "main": "dist/src/index.js",
