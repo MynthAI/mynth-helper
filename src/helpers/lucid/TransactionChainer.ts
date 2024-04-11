@@ -156,6 +156,18 @@ class TransactionChainer {
     throw new Error(`Could not find ${txHash}#${index}`);
   }
 
+  public getUtxosForTx(txHash: string): UTxO[] {
+    const allUtxos = [];
+    for (const address in this.utxos) {
+      for (const utxo of this.utxos[address]) {
+        if (utxo.txHash == txHash) {
+          allUtxos.push(utxo);
+        }
+      }
+    }
+    return allUtxos;
+  }
+
   public spendUtxo(txHash: string, index: number) {
     for (const address in this.utxos) {
       for (let i = 0; i < this.utxos[address].length; i++) {
