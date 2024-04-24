@@ -39,11 +39,14 @@ class TransactionChainer {
     return new TransactionChainer(blockfrostApiKey, address, utxos, seed);
   }
 
-  public async registerAddress(address: string) {
-    const lucid = await getLucid(this.blockfrostApiKey);
-    lucid.selectWalletFrom({ address });
+  public async registerAddress(address: string, utxos?: UTxO[]) {
+    if (!utxos) {
+      const lucid = await getLucid(this.blockfrostApiKey);
+      lucid.selectWalletFrom({ address });
+      utxos = await lucid.wallet.getUtxos();
+    }
 
-    this.utxos[address] = await lucid.wallet.getUtxos();
+    this.utxos[address] = utxos;
   }
 
   public async registerWallet(address: string, seed: string) {
