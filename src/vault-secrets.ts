@@ -13,7 +13,7 @@ const loadSecrets = () => {
     const [path, field] = key.toLowerCase().split("__");
 
     if (path && field) {
-      secrets[`${name}/${path.replace("_", "/")} ${field}`] = context[key];
+      secrets[`${name}/${path.replace(/_/g, "/")} ${field}`] = context[key];
     }
   });
 
