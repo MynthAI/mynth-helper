@@ -6,16 +6,19 @@ const loadSecrets = () => {
   invariant(process.argv[2], "name is missing");
 
   const context = JSON.parse(process.env.SECRETS_CONTEXT);
-  const secrets: Record<string, string> = {};
   const name = process.argv[2];
 
-  Object.keys(context).forEach((key) => {
-    const [path, field] = key.toLowerCase().split("__");
+  const secrets = Object.keys(context).reduce<Record<string, string>>(
+    (acc, key) => {
+      const [path, field] = key.toLowerCase().split("__");
 
-    if (path && field) {
-      secrets[`${name}/${path.replace("_", "/")} ${field}`] = context[key];
-    }
-  });
+      if (path && field)
+        acc[`${name}/${path.replace(/_/g, "/")} ${field}`] = context[key];
+
+      return acc;
+    },
+    {}
+  );
 
   return secrets;
 };
